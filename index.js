@@ -20,14 +20,17 @@ app.use((req, res, next) => {
   next();
 });
 
-mongoose.connect(process.env.MONGOBD_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true, useFindAndModify: false}, ()=> console.log('connected to database'))
+// Connection
+
+mongoose.connect(process.env.MONGOBD_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true, useFindAndModify: false}, ()=> console.log('connected to database'));
+mongoose.Promise = global.Promise;
 
 app.use('/', express.static(__dirname + '/client/build/'))
 
 
-// app.get('/', (req, res) => {
-//   res.sendFile(__dirname + '/client/build/index.html');
-// });
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/client/build/index.html');
+});
 
 app.use('/api', api);
 
@@ -37,12 +40,13 @@ app.post('/schools', (req, res, next)=>{
   }).catch(next);
 })
 
-
+// get all schools
 app.get('/schools', (req, res, next)=>{
   School.find({}).then((school)=>{
     res.send(school)
   }).catch(next);
 })
+
 
 app.get('/closeschools', (req, res, next)=>{
         const longitude = parseFloat(req.query.lng);
@@ -63,5 +67,5 @@ app.get('/closeschools', (req, res, next)=>{
         });
 })
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 app.listen(port, () => console.log(`listening at http://localhost:${port}`));

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import Autocomplete from './autocomplete.component';
 
 export default class Home extends Component {
   constructor() {
     super();
     this.state = {
-      message: 'Loading...'
+      message: 'Loading...',
+      address: '',
     }
   }
   
@@ -16,7 +18,6 @@ export default class Home extends Component {
           );
   }
 
-  
   render() {
 
     const messages = Object.keys(this.state.message).map((key) => {
@@ -27,8 +28,11 @@ export default class Home extends Component {
     return (
       <div>
         <h1>Home</h1>
-    <div>{messages}</div>
-    
+        <div>{messages}</div>
+        <div style={{height: '200px', width: "100%", display: "flex",
+      aliggnItems: 'center', justifyContent:"center"}}>
+        <Autocomplete/>
+        </div>
       </div>
     );
   }

@@ -46,7 +46,7 @@ const SchoolSchema = new Schema({
 
     // General, Technical, Vocational , Art Secondary Education
     areas:{
-        type: String,
+        type:[ String],
         required:[true, 'Areas is required']
     },
 
@@ -74,8 +74,6 @@ const SchoolSchema = new Schema({
 
 })
 
-
-// const schoolsSchema = new mongoose.Schema({})
 GeoSchema.index({coordinates: '2dsphere'});
 
 const School = mongoose.model('School',SchoolSchema, 'schools');
